@@ -7,7 +7,8 @@
 //Es la base de react
 //los Hooks te permite utilizar diferenes funciones de react en tus componentes
 //que es el "State" en React -La pieza central de react-
-//
+//El estado es una variable con informacion relevante en nuestra aplicacion de react, algunas veces pertene a un componente en especifico y en otras deseas compartirlo
+//Piensa en el state como el resultado de alguna interaccion en el sitio o aplicacion web: el listado, la imagen a mostrar en una galeria, si un usuario esta autenticado o no.
 
 import Guitar from "./components/Guitar"
 import Header from "./components/Header"
