@@ -6,6 +6,8 @@
 //React Hooks o Hooks
 //Es la base de react
 //los Hooks te permite utilizar diferenes funciones de react en tus componentes
+//que es el "State" en React -La pieza central de react-
+//
 
 import Guitar from "./components/Guitar"
 import Header from "./components/Header"
