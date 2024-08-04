@@ -34,7 +34,7 @@
 //Eventos en React - la forma en que React maneja los eventos es muy similar a como lo hace JavaScript de forma nativa con algunos cambios.
 //Los eventos son camelCase, es decir en lugar de onchange se utiliza onChange, en lugar de onclick se utiliza onClick
 //Tambien a diferencia de JS y HTML, donde se coloca el nombre de la función en un string en React (JSX) se utiliza la función entre llaves {} 
-//ok
+
 
 import { useState, useEffect } from "react"
 import Guitar from "./components/Guitar"
@@ -70,8 +70,18 @@ function App() {
 
   function addToCart(item){
     const itemExists = cart.findIndex(guitar=>guitar.id === item.id)
+    //const itemExists = [cart].findIndex(guitar=>guitar.id === item.id) - tambien funciona y mejor
     if(itemExists >=0) {//El elemento existe en el carrito
-      console.log('Ya existe...')
+      //console.log('Ya existe...')
+      //cart[itemExists].quantity++ -Error el state es inmutable
+      //const updatedCart = [...cart]//Primero una copia del state
+      const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
+      updatedCart[itemExists].quantity++
+      setCart(updatedCart)
+      console.log('Carrito original: ')
+      console.log(cart)
+      console.log('Carrito copia: ')
+      console.log(updatedCart)
     }else{
       item.quantity = 1
       setCart([...cart,item])
