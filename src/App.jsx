@@ -78,10 +78,10 @@ function App() {
       const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
       updatedCart[itemExists].quantity++
       setCart(updatedCart)
-      console.log('Carrito original: ')
-      console.log(cart)
-      console.log('Carrito copia: ')
-      console.log(updatedCart)
+      // console.log('Carrito original: ')
+      // console.log(cart)
+      // console.log('Carrito copia: ')
+      // console.log(updatedCart)
     }else{
       item.quantity = 1
       setCart([...cart,item])
@@ -91,7 +91,9 @@ function App() {
 
   return (//El return es lo que se muestra en pantalla
     <>
-    <Header />
+    <Header 
+    cart={cart}
+    />
 
 
     <main className="container-xl mt-5">
@@ -102,7 +104,7 @@ function App() {
             <Guitar
             key={guitar.id}
                 guitar={guitar}
-                setCart={setCart}
+                setCart={setCart}//esto creo que no lo estoy usando
                 addToCart={addToCart}
             />
           ))}
