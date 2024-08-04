@@ -34,7 +34,7 @@
 //Eventos en React - la forma en que React maneja los eventos es muy similar a como lo hace JavaScript de forma nativa con algunos cambios.
 //Los eventos son camelCase, es decir en lugar de onchange se utiliza onChange, en lugar de onclick se utiliza onClick
 //Tambien a diferencia de JS y HTML, donde se coloca el nombre de la función en un string en React (JSX) se utiliza la función entre llaves {} 
-
+//ok
 
 import { useState, useEffect } from "react"
 import Guitar from "./components/Guitar"
