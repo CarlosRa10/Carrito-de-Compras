@@ -66,12 +66,14 @@ function App() {
   //   setAuth(true)
   // }, 3000);
   const [cart, setCart] = useState([])
-
+  const MIN_ITEMS = 1
+  const MAX_ITEMS = 5
 
   function addToCart(item){
     const itemExists = cart.findIndex(guitar=>guitar.id === item.id)
     //const itemExists = [cart].findIndex(guitar=>guitar.id === item.id) - tambien funciona y mejor
     if(itemExists >=0) {//El elemento existe en el carrito
+      if(cart[itemExists].quantity>=MAX_ITEMS)return
       //console.log('Ya existe...')
       //cart[itemExists].quantity++ -Error el state es inmutable
       //const updatedCart = [...cart]//Primero una copia del state
@@ -87,12 +89,58 @@ function App() {
       setCart([...cart,item])
     }
   }
+//Crear una función aqui y pasarla vía props hacia nuestro componente
+  function removeFromCart(id){
+    setCart(prevCart=> prevCart.filter(guitar=> guitar.id !==id))
+  }
+
+//función de decrementar
+function decreaseQuantity(id) {
+  //console.log('Decrementando...',id)
+  const guitar = cart.find((guitar) => guitar.id === id)
+  if (guitar.quantity === 1) {
+    removeFromCart(id)
+    return
+  }
+  const updatedCart = cart.map(item=>{
+    if(item.id===id && item.quantity>MIN_ITEMS){//identificamos el elemento sobre el cual estamos dando click
+      return{
+        ...item,//para no perder la referencia de lo que ya tenemos en el carrito de compras
+      quantity: item.quantity -1
+      }
+    }
+    return item
+  })
+  setCart(updatedCart)
+  
+}
+
+
+//función intermedia descriptiva y que nos sirva de intermediario para manejar la lógica
+//Funcion de incrementar
+  function increaseQuantity(id) {
+    //console.log('Incrementando...',id)
+    const updatedCart = cart.map(item=>{
+      if(item.id===id && item.quantity<MAX_ITEMS){//identificamos el elemento sobre el cual estamos dando click
+        return{
+          ...item,//para no perder la referencia de lo que ya tenemos en el carrito de compras
+        quantity: item.quantity +1
+        }
+      }
+      return item
+    })
+    setCart(updatedCart)
+  }
+
 
 
   return (//El return es lo que se muestra en pantalla
     <>
     <Header 
     cart={cart}
+    removeFromCart={removeFromCart}//Es mas sencillo nombrar al Prop igual que la función
+    decreaseQuantity={decreaseQuantity}
+    increaseQuantity={increaseQuantity}
     />
 
 

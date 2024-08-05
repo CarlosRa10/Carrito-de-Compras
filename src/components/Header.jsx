@@ -15,7 +15,7 @@
 import { useMemo } from "react";
 //import Guitar from "./Guitar";
 
-export default function Header({cart}){
+export default function Header({cart, removeFromCart,decreaseQuantity, increaseQuantity }){
     
     //state derivado - Es aquello que depende de otro state
     //const isEmpty = ()=>cart.length === 0 //tambien = cart.length === 0 - como variable en vez de función
@@ -71,6 +71,7 @@ export default function Header({cart}){
                                                 <button
                                                     type="button"
                                                     className="btn btn-dark"
+                                                    onClick={()=>decreaseQuantity(guitar.id)}
                                                     >
                                                     -
                                                 </button>
@@ -78,6 +79,7 @@ export default function Header({cart}){
                                                 <button
                                                     type="button"
                                                     className="btn btn-dark"
+                                                    onClick={()=>increaseQuantity(guitar.id)}
                                                 >
                                                     +
                                                 </button>
@@ -86,6 +88,7 @@ export default function Header({cart}){
                                                 <button
                                                     className="btn btn-danger"
                                                     type="button"
+                                                    onClick={()=>removeFromCart(guitar.id)}//Si toma un parametro tienes que utilizar un callback
                                                     >
                                                     X
                                                 </button>
