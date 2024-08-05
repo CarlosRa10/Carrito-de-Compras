@@ -10,12 +10,18 @@
 // import React from 'react'
 // <React.Fragment/>
 //jsx se compone de la parte de importacion, la de state o funciones y luego la de html o vista
-
-import Guitar from "./Guitar";
+//useMemo - es similar a los Computes Properties de Vuejs
+//Simplifica tus templates y en un Hook enfocado al performance porque evita que un codigo se ejecute si algunas de las dependencias que vamos a definir en ese useMemo no ha cambiado
+import { useMemo } from "react";
+//import Guitar from "./Guitar";
 
 export default function Header({cart}){
     
-    
+    //state derivado - Es aquello que depende de otro state
+    //const isEmpty = ()=>cart.length === 0 //tambien = cart.length === 0 - como variable en vez de función
+    const isEmpty = useMemo(()=>cart.length === 0,[cart])//Este codigo(useMEmo) no se ejecuta hasta que cambien ciertas partes en el codigo
+    //const cartTotal = ()=>cart.reduce((total,item)=>total+(item.quantity * item.price),0)//reduce-array metodo que toma dos parametros
+    const cartTotal =useMemo(()=>cart.reduce((total,item)=>total+(item.quantity * item.price),0),[cart])
     return (
         
     <header className="py-5 header">
@@ -33,7 +39,7 @@ export default function Header({cart}){
                         <img className="img-fluid" src="./public/img/carrito.png" alt="imagen carrito" />
 
                         <div id="carrito" className="bg-white p-3">
-                            {cart.length === 0 ?(
+                            {isEmpty?(//isEmpty() - ya no es una funcion gracias al useMemo
                                 <p className="text-center">El carrito esta vacio</p>
                             ):(
                                 <>
@@ -88,7 +94,7 @@ export default function Header({cart}){
                                     ))}
                                 </tbody>
                             </table>
-                            <p className="text-end">Total pagar: <span className="fw-bold">$899</span></p>
+                            <p className="text-end">Total pagar: <span className="fw-bold">${cartTotal}</span></p>
                             <button className="btn btn-dark w-100 mt-3 p-2">Vaciar Carrito</button>
                             </>
                             )}
