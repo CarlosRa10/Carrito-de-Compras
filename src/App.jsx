@@ -145,7 +145,7 @@ function decreaseQuantity(id) {
     setCart(updatedCart)
   }
 
-  function clearCart() {
+  function clearCart(e) {
     setCart([])
   }
 //el state en react es asincrono
