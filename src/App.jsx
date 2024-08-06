@@ -44,7 +44,7 @@ import { db } from "./data/db"
 
 function App() {
 
-  const [data, setData] = useState(db)//Si lo haces con una api, inicias con un arreglo vacio ([]) y consultas tu api y se llena tu state
+  const [data, ] = useState(db)//Si lo haces con una api, inicias con un arreglo vacio ([]) y consultas tu api y se llena tu state
   //si fuera una api, sin dependencias esta seria la recomendada
   //const [data, setData] = useState([])
   // useEffect(()=>{
@@ -65,9 +65,21 @@ function App() {
   // setTimeout(() => {
   //   setAuth(true)
   // }, 3000);
-  const [cart, setCart] = useState([])
+
+
+  
+  const initialCart = () =>{
+    const localStorageCart = localStorage.getItem('cart')
+    return localStorageCart ? JSON.parse(localStorageCart) : []
+  }
+  const [cart, setCart] = useState(initialCart)
   const MIN_ITEMS = 1
   const MAX_ITEMS = 5
+  //Siempre va a tener ese callback 
+  //Ayuda con los efectos secundario cuando el state cambia
+  useEffect(()=>{
+  localStorage.setItem('cart', JSON.stringify(cart))
+  }, [cart])//cada vez que cart cambien aplicamos el codigo de arriba 
 
   function addToCart(item){
     const itemExists = cart.findIndex(guitar=>guitar.id === item.id)
@@ -77,7 +89,8 @@ function App() {
       //console.log('Ya existe...')
       //cart[itemExists].quantity++ -Error el state es inmutable
       //const updatedCart = [...cart]//Primero una copia del state
-      const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
+      //const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
+      const updatedCart = [...cart]
       updatedCart[itemExists].quantity++
       setCart(updatedCart)
       // console.log('Carrito original: ')
@@ -132,8 +145,15 @@ function decreaseQuantity(id) {
     setCart(updatedCart)
   }
 
+  function clearCart() {
+    setCart([])
+  }
+//el state en react es asincrono
+  // function saveLocalStorage(){
+  //   localStorage.setItem('cart',JSON.stringify(cart))//Toma dos parametros-1) el nombre de lo que quieres almacenar en localStorage(identificador)-2)lo que deseas almacenar -LocalStorage es una API muy sencilla, no te permite almacenar objetos, ni arreglos... solo string...nuestro carrito es un arreglo y lo convertimos a string con json.stringify
+  // }
 
-
+  //pasar funciones a los componentes
   return (//El return es lo que se muestra en pantalla
     <>
     <Header 
@@ -141,6 +161,8 @@ function decreaseQuantity(id) {
     removeFromCart={removeFromCart}//Es mas sencillo nombrar al Prop igual que la función
     decreaseQuantity={decreaseQuantity}
     increaseQuantity={increaseQuantity}
+    clearCart={clearCart}
+
     />
 
 
