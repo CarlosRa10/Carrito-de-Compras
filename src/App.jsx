@@ -89,10 +89,15 @@ function App() {
       //console.log('Ya existe...')
       //cart[itemExists].quantity++ -Error el state es inmutable
       //const updatedCart = [...cart]//Primero una copia del state
-      //const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
-      const updatedCart = [...cart]
+      const updatedCart = structuredClone(cart)//esta copia es mejor, no esta vinculada a el state
+      // const updatedCart = [...cart]
       updatedCart[itemExists].quantity++
       setCart(updatedCart)
+
+
+      //const updatedCart = [...cart];
+      // updatedCart[itemExists] = { ...updatedCart[itemExists], quantity: updatedCart[itemExists].quantity + 1 };
+      // setCart(updatedCart);
       // console.log('Carrito original: ')
       // console.log(cart)
       // console.log('Carrito copia: ')
